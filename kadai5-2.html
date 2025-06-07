@@ -4,9 +4,9 @@
     <title>演習課題5-2：外部APIの呼び出しテスト</title>
 </head>
 <body>
-    <h1 id="msg">何かのAPI</h1>
+    <h1 id="msg">ランダムに料理の画像を返してくれるAPI</h1>
     <form name="apiform"><p>
-        何かのフォーム：<input type="text" name="form_data">
+        ランダム料理画像(今日の晩御飯にどうですか)：
         <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
     </p></form>
     
@@ -14,7 +14,12 @@
     <script>
         async function some_api(myForm) {
             // ここにコードを書く
-            document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
+            const endpoint = "https://foodish-api.com/api/";
+            const response = await fetch(endpoint);
+            const data = await response.json();
+            const imageUrl = data.image;
+
+            document.getElementById("result").innerHTML = `<img src="${imageUrl}" alt="ランダムな料理画像" style="max-width: 300px;">`;
             document.apiform.reset();
         }
     </script>
